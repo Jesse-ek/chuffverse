@@ -1,0 +1,481 @@
+:root {
+  --panel-w: 320px;
+  --card-pad: 14px;
+  --radius: 12px;
+  --shadow: 0 6px 16px rgba(0,0,0,.12);
+  --active: #1c7ed6;
+}
+
+* { box-sizing: border-box; }
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+}
+
+.page {
+  height: 100%;
+  display: grid;
+  grid-template-columns: var(--panel-w) 1fr;
+  gap: 20px;
+  padding: 16px;
+  overflow-x: hidden;
+}
+
+/* ---------------- Left Side ---------------- */
+.left-pane {
+  overflow-y: auto; /* ✅ allows full scroll */
+  margin-left: 60px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 450px;
+  min-height: 0;
+  overflow: hidden;
+  padding-bottom: 30px;
+}
+
+.profile-switcher {
+  margin-bottom: 40px;
+}
+
+.profile-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: var(--card-pad);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.profile-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,.15);
+}
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-card,
+.grid {
+  width: 100%;
+  box-sizing: border-box;
+}
+.arrow {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: #f1f1f5;
+  font-size: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .2s ease;
+}
+.arrow:hover { background: #e7e7ee; }
+
+.profile-image-wrap {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.profile-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.profile-name {
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+.landing-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.landing-image {
+    position: relative; /* ✅ make it the reference for the button */
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.explore-btn {
+  position: absolute;
+   z-index: 1000; /* ✅ ensure it's above the image */
+}
+
+.explore-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ---------------- Accessory Grid (Desktop) ---------------- */
+.grid {
+  background: #746464;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--card-pad);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+  max-width: 100%;
+  flex: 1;
+   
+  overflow-y: auto;
+  max-height: calc(100vh - 300px); /* ✅ dynamic size to fit screen */
+
+  min-height: 0;
+}
+
+.grid-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  align-items: center;
+  gap: 10px;
+  padding: 6px;
+  border-radius: var(--radius);
+  transition: background .2s ease;
+}
+
+/* === Tile Styling === */
+.tile {
+  border: 2px solid transparent;
+  background: #fdfdfd;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  max-width: 150px;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+.tile:hover {
+  border-color: #bbb;
+  transform: scale(1.06);
+}
+.tile.active {
+  border-color: var(--active);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--active) 25%, transparent);
+}
+
+.shirt-tile img,
+.cap-tile img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center !important;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Shirt scaling */
+.shirt-tile img {
+  transform: translate(-50%, -50%) scale(2.9);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* Cap scaling */
+.cap-tile img {
+  transform: translate(-50%, calc(-50% + 8px)) scale(1.4);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Clear button */
+
+
+/* ---------------- Right Side ---------------- */
+.right-pane {
+  display: grid;
+  place-items: center;
+}
+.stage {
+  
+  position: relative;
+  width: min(60vw, 520px);
+  height: min(72vh, 520px);
+}
+.stage img {
+  position: absolute;
+  inset: 0;
+  width: 120%;
+  height: 120%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+/* --- Right-side layout: stage + bio card side-by-side --- */
+.stage-and-bio {
+  display: grid;
+  grid-template-columns: 1fr 320px; /* stage | card */
+  align-items: start;
+  gap: 32px;
+  width: 100%;
+}
+
+/* === Character bio overlay on the stage === */
+
+/* .stage should already be position:relative in your file.
+   If not, keep this line. */
+
+/* The overlay card that shows name + description */
+.character-bio {
+    position: absolute;
+  top: 50%;
+  right: clamp(16px, 10%, 100px); /* adjusts automatically on different screen sizes */
+  transform: translateY(-50%);
+  max-width: min(42%, 280px);
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--card-pad);
+  text-align: left;
+  line-height: 1.35;
+
+}
+
+.character-bio h2 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+}
+
+.character-bio p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+
+/* On narrow screens, stack the card below the image for readability */
+@media (max-width: 720px) {
+  .character-bio {
+    position: static;
+    transform: none;
+    max-width: 100%;
+    margin-top: 10px;
+  }
+
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+/* Footer (full width bar, bird centered) */
+.app-footer {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 64px;
+  background: #6f6565;
+  display: grid;
+  place-items: center;
+  z-index: 5;
+}
+
+.footer-bird {
+  font-size: 28px;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,.3));
+}
+
+/* Keep mobile clean: stack bio under stage */
+@media (max-width: 900px) {
+  .stage-and-bio {
+    grid-template-columns: 1fr;  /* stack */
+    gap: 16px;
+  }
+  .bio-card {
+    margin-inline: auto;
+    max-width: 360px;
+  }
+  .app-footer {
+    height: 56px;
+  }
+}
+
+/* desktop defaults */
+.desktop-only {
+  display: block;
+}
+.mobile-only {
+  display: none;
+}
+
+/* ---------------- Mobile Layout ---------------- */
+@media (max-width: 768px) {
+  .page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .left-pane {
+    margin-left: 0;
+    width: 100%;
+    max-width: 450px;
+    padding-bottom: 0;
+  }
+
+  .profile-card {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .right-pane {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px 0;
+  }
+
+  .stage {
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* ✅ Increase base image size on mobile */
+  .stage img {
+    width: 250px;
+    height: auto;
+    max-width: 300px;
+        margin: 0 auto 8px; /* small bottom margin */
+  }
+
+  .left-pane .grid,
+  .left-pane .clear-btn {
+    display: none;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  .mobile-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    justify-content: space-between;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .mobile-layout > .profile-switcher,
+  .mobile-layout > div:first-child {
+    width: 100%;
+  }
+
+  .mobile-stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  flex-grow: 0; /* prevent stretching */
+    margin: 0; /* remove extra margin */  }
+
+  .mobile-stage img {
+    max-width: 300px;
+    width: 250px;
+    height: auto;
+  }
+
+  .accessory-section {
+    display: grid;
+  grid-template-columns: repeat(2, 1fr); /* ✅ two columns */
+  min-height: 180px;
+    max-height: none; /* remove fixed max-height */
+  overflow-y: auto;
+  width: 90%; /* ✅ slightly smaller for centering space */
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  justify-items: center; /* ✅ centers tiles inside grid */
+  }
+
+  .accessory-section .tile {
+    width: 100%;
+  max-width: 150px;
+  height: 100px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  }
+
+  .accessory-section::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .accessory-section::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+
+  .accessory-section::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .accessory-section .shirt-tile img,
+.accessory-section .cap-tile img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1); /* ✅ reset scale for mobile */
+  max-width: 140%;
+  max-height: 80%;
+  object-fit: contain;
+}
+
+}
