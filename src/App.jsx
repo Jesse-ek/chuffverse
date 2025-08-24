@@ -1,6 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
-
 import CHARACTERS from "./data/characters";
 import ProfileSwitcher from "./components/ProfileSwitcher";
 import AccessoryGrid from "./components/AccessoryGrid";
