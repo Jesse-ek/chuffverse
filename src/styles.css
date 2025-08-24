@@ -10,8 +10,11 @@
 
 * { box-sizing: border-box; }
 html, body, #root {
-  height: 100%;
-  margin: 0;
+ height: 100%;
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
   font-family: Inter, 'Itim', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
@@ -19,7 +22,6 @@ html, body, #root {
   height: 100%;
   display: grid;
   grid-template-columns: var(--panel-w) 1fr;
-  gap: 20px;
   padding: 20px;
   overflow-x: hidden;
 }
