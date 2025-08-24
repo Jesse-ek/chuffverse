@@ -1,11 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+
 import CHARACTERS from "./data/characters";
 import ProfileSwitcher from "./components/ProfileSwitcher";
 import AccessoryGrid from "./components/AccessoryGrid";
 import CharacterStage from "./components/CharacterStage";
 import CharacterBio from "./components/CharacterBio";
-import "./App.css"; // ✅ Your CSS file containing the styles you provided
-import "./styles.css"
+import LandingPage from "./components/LandingPage"; // ✅ landing page import
+import "./App.css"; // your CSS
+import "./styles.css"; // additional CSS
 
 const buildDefault = () =>
   CHARACTERS.reduce((acc, c) => {
@@ -16,6 +19,20 @@ const buildDefault = () =>
 export default function App() {
   const [index, setIndex] = useState(0);
   const [selection, setSelection] = useState(buildDefault);
+
+  // ✅ landing page state with fade
+  const [showLanding, setShowLanding] = useState(true);
+  const [fadeLanding, setFadeLanding] = useState(false);
+  const [fadeMain, setFadeMain] = useState(false);
+
+  // ✅ handle explore click
+  const handleExplore = () => {
+    setFadeLanding(true); // fade out landing
+    setTimeout(() => {
+      setShowLanding(false); // hide landing
+      setFadeMain(true); // fade in main page
+    }, 600); // duration matches CSS transition
+  };
 
   const character = CHARACTERS[index];
   const active = selection[character.name] ?? {
@@ -101,15 +118,21 @@ export default function App() {
       [character.name]: { rowIndex: null, shirt: false, cap: false },
     }));
 
+  // ✅ show landing page first
+  if (showLanding) {
+    return <LandingPage onExplore={handleExplore} fade={fadeLanding} />;
+  }
+
+  // ✅ render existing character display with fade-in
   return (
     <div
-      className="page"
+      className={`page ${fadeMain ? "fade-in" : ""}`}
       style={{
         backgroundColor: character.bg,
         transition: "background-color 0.3s ease",
       }}
     >
-      {/* ✅ Desktop Layout */}
+      {/* Desktop Layout */}
       <aside className="left-pane desktop-only">
         <div className="profile-switcher">
           <ProfileSwitcher
@@ -130,23 +153,19 @@ export default function App() {
           onToggleCap={onToggleCap}
           gridColor={character.bg}
         />
-       
       </aside>
 
       <main className="right-pane desktop-only">
-  <CharacterStage
-    imageSrc={shownImage}
-    name={character.name}
-    character={character}
-  />
-  <CharacterBio character={character} />  {/* 👈 add this */}
-</main>
+        <CharacterStage
+          imageSrc={shownImage}
+          name={character.name}
+          character={character}
+        />
+        <CharacterBio character={character} />
+      </main>
 
-
-
-      {/* ✅ Mobile Layout */}
+      {/* Mobile Layout */}
       <div className="mobile-only mobile-layout">
-        {/* Top: Profile */}
         <div className="mobile-profile">
           <ProfileSwitcher
             character={character}
@@ -155,22 +174,18 @@ export default function App() {
           />
         </div>
 
-        {/* Middle: Base Image */}
-      
- <div className="mobile-stage">
-  <CharacterStage
-    imageSrc={shownImage}
-    name={character.name}
-    character={character}   // ✅ add this line too
-  />
-   <CharacterBio character={character} />  {/* 👈 add this */}
-</div>
+        <div className="mobile-stage character-row">
+          <CharacterStage
+            imageSrc={shownImage}
+            name={character.name}
+            character={character}
+          />
+          <CharacterBio character={character} />
+        </div>
 
-        {/* Bottom: Scrollable Grid */}
         <div className="accessory-section scrollable-grid">
           {character.rows.map((row, rowIndex) => (
             <React.Fragment key={rowIndex}>
-              {/* Shirt */}
               <div
                 className={`tile shirt-tile ${
                   active.rowIndex === rowIndex && active.shirt ? "active" : ""
@@ -180,7 +195,6 @@ export default function App() {
                 <img src={row.shirt} alt={`Shirt ${rowIndex}`} />
               </div>
 
-              {/* Cap */}
               <div
                 className={`tile cap-tile ${
                   active.rowIndex === rowIndex && active.cap ? "active" : ""

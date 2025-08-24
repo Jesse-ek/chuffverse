@@ -1,11 +1,12 @@
 import React from "react";
-import "./App.css"; // ✅ includes landing page CSS
+import { useNavigate } from "react-router-dom";
+import "../styles.css";
 
 export default function LandingPage({ onExplore }) {
   return (
     <div className="landing-page">
       <img
-        src="/Landing page.png"
+        src="/Landingpage.png" // make sure the name matches exactly
         alt="Landing"
         className="landing-image"
       />

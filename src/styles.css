@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
 :root {
   --panel-w: 320px;
   --card-pad: 14px;
@@ -10,7 +12,7 @@
 html, body, #root {
   height: 100%;
   margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  font-family: Inter, 'Itim', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
 .page {
@@ -18,7 +20,7 @@ html, body, #root {
   display: grid;
   grid-template-columns: var(--panel-w) 1fr;
   gap: 20px;
-  padding: 16px;
+  padding: 20px;
   overflow-x: hidden;
 }
 
@@ -40,6 +42,9 @@ html, body, #root {
 }
 
 .profile-card {
+  max-width: 320px; /* reduce width */
+ width: 90%;       /* responsive */
+  margin: 0 auto;   /* center horizontally */
   background: white;
   border-radius: var(--radius);
   padding: var(--card-pad);
@@ -47,7 +52,7 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 20px;
   transition: transform .2s ease, box-shadow .2s ease;
 }
 .profile-card:hover {
@@ -57,7 +62,7 @@ html, body, #root {
 .profile-top {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 20px;
 }
 
 .profile-card,
@@ -68,19 +73,33 @@ html, body, #root {
 .arrow {
   width: 30px;
   height: 30px;
-  border-radius: 50%;
+  border-radius: 10%;
   border: none;
-  background: #f1f1f5;
-  font-size: 16px;
+  background: linear-gradient(135deg, #302727, #746464); /* gradient */
+  color: white; /* arrow icon color */
+  font-size: 18px;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background .2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 5px #746464; /* glowing shadow */
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease;
 }
-.arrow:hover { background: #e7e7ee; }
+.arrow:hover {
+  transform: scale(1.15) rotate(8deg); /* playful hover effect */
+  box-shadow: 0 6px 14px #746464;
+  background: linear-gradient(135deg, #5c5555, #746464);
+}
+
+.arrow:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(41, 46, 50, 0.3);
+}
 
 .profile-image-wrap {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   border-radius: 12px;
   background: #fff;
   border: 1px solid #ddd;
@@ -89,45 +108,62 @@ html, body, #root {
   place-items: center;
 }
 .profile-image-wrap img {
-  width: 100%;
-  height: 100%;
+  width:150%;
+  height: 150%;
   object-fit: contain;
 }
 
 .profile-name {
   font-weight: 700;
-  font-size: 15px;
+  font-size: 20px;
   letter-spacing: 1px;
   margin-top: 4px;
 }
+/* Explore Button Styling */
+.explore-btn {
+  position: absolute;
+  z-index: 1000;
+  padding: 16px 32px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #161616;
+  background: linear-gradient(135deg, #ffffff, #edeef0);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+}
+
+.explore-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.explore-btn:active {
+  transform: scale(0.95);
+}
+
+/* Fade in / fade out animation for landing page */
 .landing-page {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.6s ease;
 }
 
-.landing-image {
-    position: relative; /* ✅ make it the reference for the button */
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+.landing-page.fade-out {
+  opacity: 0;
+  pointer-events: none; /* prevent clicking when fading */
 }
 
-.explore-btn {
-  position: absolute;
-   z-index: 1000; /* ✅ ensure it's above the image */
-}
-
-.explore-btn:hover {
-  transform: scale(1.05);
-}
 
 /* ---------------- Accessory Grid (Desktop) ---------------- */
 .grid {
@@ -210,13 +246,13 @@ html, body, #root {
 /* Shirt scaling */
 .shirt-tile img {
   transform: translate(-50%, -50%) scale(2.9);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+ 
 }
 
 /* Cap scaling */
 .cap-tile img {
   transform: translate(-50%, calc(-50% + 8px)) scale(1.4);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+ 
 }
 
 /* Clear button */
@@ -227,6 +263,8 @@ html, body, #root {
   display: grid;
   place-items: center;
 }
+
+
 .stage {
   
   position: relative;
@@ -242,6 +280,36 @@ html, body, #root {
   user-select: none;
   pointer-events: none;
 }
+.character-row {
+  display: grid;
+  grid-template-columns: 40% 60%;  /* left image, right bio */
+  gap: 16px;
+  align-items: start;
+  width: 100%;
+}
+
+.character-row .stage {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.character-row .stage img {
+  max-width: 100px;
+  height: auto;
+}
+
+.character-row .character-bio {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
 /* --- Right-side layout: stage + bio card side-by-side --- */
 .stage-and-bio {
   display: grid;
@@ -257,10 +325,11 @@ html, body, #root {
    If not, keep this line. */
 
 /* The overlay card that shows name + description */
+
 .character-bio {
     position: absolute;
   top: 50%;
-  right: clamp(16px, 10%, 100px); /* adjusts automatically on different screen sizes */
+  right: clamp(16px, 10%, 80px); /* adjusts automatically on different screen sizes */
   transform: translateY(-50%);
   max-width: min(42%, 280px);
   box-sizing: border-box;
@@ -349,8 +418,8 @@ html, body, #root {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 16px;
-    gap: 12px;
+    padding: 2px;
+    gap: 0; /* remove spacing between child elements */
   }
 
   .left-pane {
@@ -362,32 +431,61 @@ html, body, #root {
 
   .profile-card {
     width: 100%;
-    margin-bottom: 16px;
+   
   }
 
   .right-pane {
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* stack stage + accessories */
+    justify-content: flex-start; /* remove vertical centering */
     align-items: center;
-    margin: 16px 0;
+    margin: 0; /* remove invalid margin */
+    gap: 8px; /* small gap between stage and accessories */
+ /* small gap between stage and accessories */
   }
 
-  .stage {
-    max-width: 300px;
+  /* ✅ Character image + bio side by side */
+  .character-row {
+    display: grid;
+    grid-template-columns: 40% 60%; /* left image, right bio */
+    gap: 1px;
+    align-items: start;
     width: 100%;
-    margin: 0 auto;
+  }
+
+  .character-row .stage {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
   }
 
-  /* ✅ Increase base image size on mobile */
-  .stage img {
-    width: 250px;
+  .character-row .stage img {
+    max-width: 160px;
     height: auto;
-    max-width: 300px;
-        margin: 0 auto 8px; /* small bottom margin */
+  }
+
+  .character-row .character-bio {
+    width: 100%;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+ .stage {
+    width: 100%;       /* take full width */
+    max-width: 300px;  /* optional: limit width */
+    height: 250px;      /* let it shrink to image content */
+  }
+  /* ✅ Increase base image size when standalone (not inside .character-row) */
+  .stage img {
+    position: static;
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
   }
 
   .left-pane .grid,
@@ -404,6 +502,8 @@ html, body, #root {
   }
 
   .mobile-layout {
+        padding-bottom: 80px; /* ✅ makes space so content doesn’t touch fixed footer */
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -424,35 +524,41 @@ html, body, #root {
     justify-content: center;
     align-items: center;
     width: 100%;
-  flex-grow: 0; /* prevent stretching */
-    margin: 0; /* remove extra margin */  }
+    flex-grow: 0; /* prevent stretching */
+    margin: 0; /* remove extra margin */
+  }
 
   .mobile-stage img {
     max-width: 300px;
-    width: 250px;
+    width: 300px;
     height: auto;
   }
 
   .accessory-section {
+    row-gap: 20px; /* increase vertical spacing between rows */
+
     display: grid;
-  grid-template-columns: repeat(2, 1fr); /* ✅ two columns */
-  min-height: 180px;
+    grid-template-columns: repeat(2, 1fr); /* ✅ two columns */
+    min-height: 180px;
     max-height: none; /* remove fixed max-height */
-  overflow-y: auto;
-  width: 90%; /* ✅ slightly smaller for centering space */
-  padding: 10px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.1);
-  justify-items: center; /* ✅ centers tiles inside grid */
+    overflow-y: auto;
+    width: 90%; /* ✅ slightly smaller for centering space */
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    justify-items: center; /* ✅ centers tiles inside grid */
+    padding-bottom: 20px; /* ✅ space inside the section */
+    margin-bottom: 20px;  /* ✅ space outside the section */
+
   }
 
   .accessory-section .tile {
     width: 100%;
-  max-width: 150px;
-  height: 100px;
-  border-radius: 10px;
-  position: relative;
-  overflow: hidden;
+    max-width: 150px;
+    height: 100px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
   }
 
   .accessory-section::-webkit-scrollbar {
@@ -467,15 +573,20 @@ html, body, #root {
   .accessory-section::-webkit-scrollbar-track {
     background: transparent;
   }
-  .accessory-section .shirt-tile img,
-.accessory-section .cap-tile img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1); /* ✅ reset scale for mobile */
-  max-width: 140%;
-  max-height: 80%;
-  object-fit: contain;
-}
 
+  .accessory-section .shirt-tile img,
+  .accessory-section .cap-tile img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2.5); /* ✅ reset scale for mobile */
+    max-width: 140%;
+    max-height: 80%;
+    object-fit: contain;
+  }
+    .accessory-section .cap-tile img {
+    transform: translate(-50%, -50%) scale(1); /* keep original size */
+    max-width: 140%;
+    max-height: 80%;
+  }
 }
