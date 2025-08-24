@@ -4,7 +4,6 @@ import ProfileSwitcher from "./components/ProfileSwitcher";
 import AccessoryGrid from "./components/AccessoryGrid";
 import CharacterStage from "./components/CharacterStage";
 import CharacterBio from "./components/CharacterBio";
-import LandingPage from "./components/LandingPage"; // ✅ landing page import
 import "./App.css"; // your CSS
 import "./styles.css"; // additional CSS
 
@@ -17,20 +16,6 @@ const buildDefault = () =>
 export default function App() {
   const [index, setIndex] = useState(0);
   const [selection, setSelection] = useState(buildDefault);
-
-  // ✅ landing page state with fade
-  const [showLanding, setShowLanding] = useState(true);
-  const [fadeLanding, setFadeLanding] = useState(false);
-  const [fadeMain, setFadeMain] = useState(false);
-
-  // ✅ handle explore click
-  const handleExplore = () => {
-    setFadeLanding(true); // fade out landing
-    setTimeout(() => {
-      setShowLanding(false); // hide landing
-      setFadeMain(true); // fade in main page
-    }, 600); // duration matches CSS transition
-  };
 
   const character = CHARACTERS[index];
   const active = selection[character.name] ?? {
@@ -116,15 +101,9 @@ export default function App() {
       [character.name]: { rowIndex: null, shirt: false, cap: false },
     }));
 
-  // ✅ show landing page first
-  if (showLanding) {
-    return <LandingPage onExplore={handleExplore} fade={fadeLanding} />;
-  }
-
-  // ✅ render existing character display with fade-in
   return (
     <div
-      className={`page ${fadeMain ? "fade-in" : ""}`}
+      className="page"
       style={{
         backgroundColor: character.bg,
         transition: "background-color 0.3s ease",
@@ -180,7 +159,8 @@ export default function App() {
           />
           <CharacterBio character={character} />
         </div>
-
+{/* Accessories Title */}
+  <h2 className="accessories-title">Accessories</h2>
         <div className="accessory-section scrollable-grid">
           {character.rows.map((row, rowIndex) => (
             <React.Fragment key={rowIndex}>

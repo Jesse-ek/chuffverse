@@ -533,6 +533,13 @@ html, body, #root {
     width: 300px;
     height: auto;
   }
+.accessories-title {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 1rem 0 0.5rem 0;
+  color: #333;
+}
 
   .accessory-section {
     row-gap: 20px; /* increase vertical spacing between rows */
