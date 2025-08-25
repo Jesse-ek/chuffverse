@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/chuffverse',   // 👈 Important for GitHub Pages + custom domain
+  base: '/chuffverse/',   // 👈 Important for GitHub Pages + custom domain
 })
